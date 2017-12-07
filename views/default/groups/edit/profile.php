@@ -15,11 +15,16 @@ $industry = project_get_industrysector();
 ?>
 
 <div>
-	<label><?php echo elgg_echo("camerproject:title"); ?></label><br />
-	<?php echo elgg_view("input/text", array(
-		"name" => "name",
-		"value" => $name,
-	));
+	
+	<?php 
+        
+        echo elgg_view_field([
+            "#type" => "text",
+            "#label" => elgg_echo("camerproject:title"),
+            "name" => "name",
+	    "value" => $name,
+        ]);
+        
 	?>
 </div>
 
