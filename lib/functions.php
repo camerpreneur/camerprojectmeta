@@ -53,67 +53,31 @@ function project_get_currency(){
     
     return $currency;
 }
-/**
- * Prepare the form vars for add/edit a Sectorindustry
- *
- * @param Sectorindustry $entity (optional) the entity to edit
- *
- * @return array
- */
-function camerproject_prepare_sectorindustry_vars(Sectorindustry $entity = null) {
-	
-	// defaults
-	$result = [
-		'title' => '',
-		'descriptionsector' => '',
-		'access_id' => get_default_access(null, [
-			'entity_type' => 'object',
-			'entity_subtype' => Sectorindustry::SUBTYPE,
-			'container_guid' => elgg_get_site_entity()->guid,
-		]),
-	];
-	
-        $sticky_vars = elgg_get_sticky_values('sectorindustry/edit');
-	
-        if (!empty($sticky_vars)) {
-            
-            foreach ($sticky_vars as $name => $value) {
-                    $result[$name] = $value;
-            }		
-            elgg_clear_sticky_form('sectorindustry/edit');
-	}
-	
-	return $result;
-}
+
 
 /**
- * Prepare the form vars for add/edit a Devise
- *
- * @param Devise $entity (optional) the entity to edit
- *
- * @return array
+ * function define industry sector 
+ * 
  */
-function camerproject_prepare_devise_vars(Devise $entity = null) {
-	
-	// defaults
-	$result = [
-		'title' => '',
-		'codedevise' => '',
-		'access_id' => get_default_access(null, [
-			'entity_type' => 'object',
-			'entity_subtype' => Devise::SUBTYPE,
-			'container_guid' => elgg_get_site_entity()->guid,
-		]),
-	];
-		
-	$sticky_vars = elgg_get_sticky_values('devise/edit');
-	if (!empty($sticky_vars)) {
-		foreach ($sticky_vars as $name => $value) {
-			$result[$name] = $value;
-		}		
-		elgg_clear_sticky_form('devise/edit');
-	}
-	
-	return $result;
-}
 
+function project_get_industrysector(){
+    
+    $codes = [
+        'agri',
+        'auto',
+        'bank',
+        'biolo',
+        'afric',
+        'it',       
+    ];
+    
+    $$industry = [];
+    
+    foreach ($codes as $code){
+        $industry[$code] = elgg_echo("camerproject:projectindustrysector:name:$code");
+    }
+    
+    uksort($industry, 'strcasecmp');
+    
+    return $industry;
+}

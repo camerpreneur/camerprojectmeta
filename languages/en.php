@@ -206,16 +206,16 @@ return [
      *  project status 
      */
     
-    'camerproject:projectstatus:title:elab_concept' => 'Concept Elaboration',
+    'camerproject:projectstatus:title:elab_concept' => 'Definition of Concept',
     'camerproject:projectstatus:title:prototype' => 'Prototype',
     'camerproject:projectstatus:title:test' => 'Test',
-    'camerproject:projectstatus:title:pre_client' => 'First Customer',
-    'camerproject:projectstatus:title:pre_result_financiere' => 'First financial result',
-    'camerproject:projectstatus:title:develop' => 'Developpment',
-    'camerproject:projectstatus:title:develop_inter' => 'Developpment inter nation',
+    'camerproject:projectstatus:title:pre_client' => 'First Customers',
+    'camerproject:projectstatus:title:pre_result_financiere' => 'First revenues',
+    'camerproject:projectstatus:title:develop' => 'Development',
+    'camerproject:projectstatus:title:develop_inter' => 'International Developpment',
     
     /**
-     *  Entity add at camerproject sectorindustry and devise
+     *  Entity add at camerproject currency
      */
     
      "camerproject:projectcurrency:name:usd" => "USD",
@@ -227,5 +227,16 @@ return [
      "camerproject:projectcurrency:name:peso" => "PESO",
      "camerproject:projectcurrency:name:birr" => "BIRR",
      "camerproject:projectcurrency:name:cedi" => "CEDI",
+    
+    /**
+     *  Entity add at camerproject industry sector
+     */
+    
+    "camerproject:projectindustrysector:name:agri" => "Agriculture, Agronomy",
+    "camerproject:projectindustrysector:name:auto" => "Automotive, Aeronautic, Mecanic",
+    "camerproject:projectindustrysector:name:bank" => "Bank, Finance, Insurance",
+    "camerproject:projectindustrysector:name:biolo" => "Biology, Pharmacy",
+    "camerproject:projectindustrysector:name:afric" => "African Culture",
+    "camerproject:projectindustrysector:name:it" => "IT, Telecom, Technology and Electronics",
 
  ];
