@@ -9,56 +9,41 @@
  */
 
 elgg_make_sticky_form('groups');
-
+$title = get_input('name');
 // Get group fields
-$input = array();
-foreach (elgg_get_config('group') as $shortname => $valuetype) {
-	$value = get_input($shortname);
-
-	if ($value === null) {
-		// only submitted fields should be updated
-		continue;
+$guid = (int) get_input('group_guid');
+$is_new_group = false;
+if (!empty($guid)) {
+	$group = get_entity($guid);
+	if (!($group instanceof ElggGroup) || !$group->canEdit()) {
+		return elgg_error_response(elgg_echo('actionunauthorized'));
 	}
-
-	$input[$shortname] = $value;
-
-	// @todo treat profile fields as unescaped: don't filter, encode on output
-	if (is_array($input[$shortname])) {
-		array_walk_recursive($input[$shortname], function (&$v) {
-			$v = elgg_html_decode($v);
-		});
-	} else {
-		$input[$shortname] = elgg_html_decode($input[$shortname]);
+} else {
+	$is_new_group = true;
+	$group = new ElggGroup();
+	
+	if (!$group->save()) {
+		return elgg_error_response(elgg_echo('camerproject:save_error'));
 	}
-
-	if ($valuetype == 'tags') {
-		$input[$shortname] = string_to_tag_array($input[$shortname]);
-	}
-}
-
-// only set if submitted
-$name = get_input('name', null, false);
-if ($name !== null) {
-	$input['name'] = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
 }
 
 $user = elgg_get_logged_in_user_entity();
 
-$group_guid = (int)get_input('group_guid');
-$is_new_group = $group_guid == 0;
+$group->name = $title;
+$group->description = get_input('description');
+$group->progress = get_input('progress');
+$group->sectorindustry = get_input('sectorindustry');
+$group->activity = get_input('activity');
+$group->markettype = get_input('markettype');
+$group->offertype = get_input('offertype');
+$group->turnover = get_input('turnover');
+$group->currency = get_input('currency');
+$group->ville = get_input('location');
+$group->projectwebsite = get_input('projectwebsite');
+$group->projectblog = get_input('projectblog');
+$group->projectpitch = get_input('projectpitch');
 
-if ($is_new_group
-		&& (elgg_get_plugin_setting('limited_groups', 'groups') == 'yes')
-		&& !$user->isAdmin()) {
-	register_error(elgg_echo("camerproject:cantcreate"));
-	forward(REFERER);
-}
-
-$group = $group_guid ? get_entity($group_guid) : new ElggGroup();
-if (elgg_instanceof($group, "group") && !$group->canEdit()) {
-	register_error(elgg_echo("camerproject:cantedit"));
-	forward(REFERER);
-}
+$group->subtype = "camerproject";
 
 // Assume we can edit or this is a new group
 foreach ($input as $shortname => $value) {

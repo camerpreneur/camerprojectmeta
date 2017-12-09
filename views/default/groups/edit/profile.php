@@ -15,22 +15,25 @@ $industry = project_get_industrysector();
 ?>
 
 <div>
-	
-	<?php 
-        
-        echo elgg_view_field([
-            "#type" => "text",
-            "#label" => elgg_echo("camerproject:title"),
-            "name" => "name",
-	    "value" => $name,
-        ]);
-        
-	?>
+    <?php   
+    echo elgg_view_field([
+        "#type" => "text",
+        "#label" => elgg_echo("camerproject:title"),
+        "name" => "name",
+        "value" => $name,
+        "required" => true,
+    ]);     
+    ?>
 </div>
 
 <div>
-<label><?php echo elgg_echo("camerproject:logoproject"); ?></label><br />
-	<?php echo elgg_view("input/file", array("name" => "icon")); ?>
+    <?php 
+        echo elgg_view_field([
+            "#type" => "file",
+            "#label" => elgg_echo("camerproject:logoproject"),
+            "name" => "icon",               
+        ])
+    ?>
 </div>
 
 <?php
