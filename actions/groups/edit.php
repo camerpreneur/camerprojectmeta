@@ -45,32 +45,6 @@ $group->projectpitch = get_input('projectpitch');
 
 $group->subtype = "camerproject";
 
-// Assume we can edit or this is a new group
-foreach ($input as $shortname => $value) {
-	// update access collection name if group name changes
-	if (!$is_new_group && $shortname == 'name' && $value != $group->name) {
-		$group_name = html_entity_decode($value, ENT_QUOTES, 'UTF-8');
-		$ac_name = sanitize_string(elgg_echo('groups:group') . ": " . $group_name);
-		$acl = get_access_collection($group->group_acl);
-		if ($acl) {
-			// @todo Elgg api does not support updating access collection name
-			$db_prefix = elgg_get_config('dbprefix');
-			$query = "UPDATE {$db_prefix}access_collections SET name = '$ac_name'
-				WHERE id = $group->group_acl";
-			update_data($query);
-		}
-	}
-
-	if ($value === '' && !in_array($shortname, ['name', 'description','progress','sectorindustry','activity','markettype','typemark','offertype','turnover','devise','location','projectwebsite','projectblog','projectpitch'])) {
-		// The group profile displays all profile fields that have a value.
-		// We don't want to display fields with empty string value, so we
-		// remove the metadata completely.
-		$group->deleteMetadata($shortname);
-		continue;
-	}
-
-	$group->$shortname = $value;
-}
 
 // Validate create
 if (!$group->name) {
