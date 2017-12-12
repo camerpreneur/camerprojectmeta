@@ -39,7 +39,7 @@ $industry = project_get_industrysector();
 <?php
 echo elgg_view_field([
      '#type' => 'plaintext',
-     '#label' => elgg_echo('camerproject:summery'),
+     '#label' => elgg_echo('camerproject:description'),
      'name' => 'description',
      'value' => elgg_extract('description', $vars),
      'required' => true,

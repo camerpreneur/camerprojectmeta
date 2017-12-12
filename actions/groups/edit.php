@@ -9,78 +9,61 @@
  */
 
 elgg_make_sticky_form('groups');
-$title = get_input('name');
-// Get group fields
-$guid = (int) get_input('group_guid');
-$is_new_group = false;
-if (!empty($guid)) {
-	$group = get_entity($guid);
-	if (!($group instanceof ElggGroup) || !$group->canEdit()) {
-		return elgg_error_response(elgg_echo('actionunauthorized'));
-	}
-} else {
-	$is_new_group = true;
-	$group = new ElggGroup();
-	
-	if (!$group->save()) {
-		return elgg_error_response(elgg_echo('camerproject:save_error'));
-	}
-}
+
+$title = htmlspecialchars(get_input('name', '', false), ENT_QUOTES, 'UTF-8');
+$description = get_input('description');
+$progress = htmlspecialchars(get_input('progress'));
+$sectorindustry = get_input('sectorindustry');
+$activity = get_input('activity');
+$markettype = get_input('markettype');
+$typemark = get_input('typemark');
+$offertype = get_input('offertype');
+$turnover  = get_input('turnover');
+$currency = get_input('currency');
+$location = get_input('location');
+$projectwebsite = get_input('projectwebsite');
+$projectblog = get_input('projectblog');
+$projectpitch = get_input('projectpitch');
 
 $user = elgg_get_logged_in_user_entity();
 
-$group->name = $title;
-$group->description = get_input('description');
-$group->progress = get_input('progress');
-$group->sectorindustry = get_input('sectorindustry');
-$group->activity = get_input('activity');
-$group->markettype = get_input('markettype');
-$group->offertype = get_input('offertype');
-$group->turnover = get_input('turnover');
-$group->currency = get_input('currency');
-$group->ville = get_input('location');
-$group->projectwebsite = get_input('projectwebsite');
-$group->projectblog = get_input('projectblog');
-$group->projectpitch = get_input('projectpitch');
+$group_guid = (int)get_input('group_guid');
+$is_new_group = $group_guid == 0;
 
-$group->subtype = "camerproject";
-
-// Assume we can edit or this is a new group
-foreach ($input as $shortname => $value) {
-	// update access collection name if group name changes
-	if (!$is_new_group && $shortname == 'name' && $value != $group->name) {
-		$group_name = html_entity_decode($value, ENT_QUOTES, 'UTF-8');
-		$ac_name = sanitize_string(elgg_echo('groups:group') . ": " . $group_name);
-		$acl = get_access_collection($group->group_acl);
-		if ($acl) {
-			// @todo Elgg api does not support updating access collection name
-			$db_prefix = elgg_get_config('dbprefix');
-			$query = "UPDATE {$db_prefix}access_collections SET name = '$ac_name'
-				WHERE id = $group->group_acl";
-			update_data($query);
-		}
-	}
-
-	if ($value === '' && !in_array($shortname, ['name', 'description','progress','sectorindustry','activity','markettype','typemark','offertype','turnover','devise','location','projectwebsite','projectblog','projectpitch'])) {
-		// The group profile displays all profile fields that have a value.
-		// We don't want to display fields with empty string value, so we
-		// remove the metadata completely.
-		$group->deleteMetadata($shortname);
-		continue;
-	}
-
-	$group->$shortname = $value;
-}
-
-// Validate create
-if (!$group->name) {
-	register_error(elgg_echo("camerproject:notitle"));
+if ($is_new_group
+		&& (elgg_get_plugin_setting('limited_groups', 'groups') == 'yes')
+		&& !$user->isAdmin()) {
+	register_error(elgg_echo("camerproject:cantcreate"));
 	forward(REFERER);
 }
 
+$camerproject = $group_guid ? get_entity($group_guid) : new ElggGroup();
+if (elgg_instanceof($camerproject, "group") && !$camerproject->canEdit()) {
+	register_error(elgg_echo("camerproject:cantedit"));
+	forward(REFERER);
+}
+
+$camerproject->name = $title;
+$camerproject->description = $description;
+$camerproject->progress = $progress;
+$camerproject->sectorindustry = $sectorindustry;
+$camerproject->activity = $activity;
+$camerproject->markettype = $markettype;
+$camerproject->typemark = $typemark;
+$camerproject->offertype = $offertype;
+$camerproject->turnover = $turnover;
+$camerproject->currency = $currency;
+$camerproject->location = $location;
+$camerproject->projectwebsite = $projectwebsite;
+$camerproject->projectblog = $projectblog;
+$camerproject->projectpitch = $projectpitch;
+
+$camerproject->subtype = "camerproject";
+
 // Set group tool options (only pass along saved entities)
-$tool_entity = !$is_new_group ? $group : null;
+$tool_entity = !$is_new_group ? $camerproject : null;
 $tool_options = groups_get_group_tool_options($tool_entity);
+
 if ($tool_options) {
 	foreach ($tool_options as $group_option) {
 		$option_toggle_name = $group_option->name . "_enable";
@@ -88,42 +71,42 @@ if ($tool_options) {
 		$value = get_input($option_toggle_name);
 
 		// if already has option set, don't change if no submission
-		if ($group->$option_toggle_name && $value === null) {
+		if ($camerproject->$option_toggle_name && $value === null) {
 			continue;
 		}
 
-		$group->$option_toggle_name = $value ? $value : $option_default;
+		$camerproject->$option_toggle_name = $value ? $value : $option_default;
 	}
 }
 
 // Group membership - should these be treated with same constants as access permissions?
 $value = get_input('membership');
-if ($group->membership === null || $value !== null) {
+if ($camerproject->membership === null || $value !== null) {
 	$is_public_membership = ($value == ACCESS_PUBLIC);
-	$group->membership = $is_public_membership ? ACCESS_PUBLIC : ACCESS_PRIVATE;
+	$camerproject->membership = $is_public_membership ? ACCESS_PUBLIC : ACCESS_PRIVATE;
 }
 
-$group->setContentAccessMode((string)get_input('content_access_mode'));
+$camerproject->setContentAccessMode((string)get_input('content_access_mode'));
 
 if ($is_new_group) {
-	$group->access_id = ACCESS_PUBLIC;
+	$camerproject->access_id = ACCESS_PUBLIC;
 }
 
-$old_owner_guid = $is_new_group ? 0 : $group->owner_guid;
+$old_owner_guid = $is_new_group ? 0 : $camerproject->owner_guid;
 
 $value = get_input('owner_guid');
 $new_owner_guid = ($value === null) ? $old_owner_guid : (int)$value;
 
 if (!$is_new_group && $new_owner_guid && $new_owner_guid != $old_owner_guid) {
 	// verify new owner is member and old owner/admin is logged in
-	if ($group->isMember(get_user($new_owner_guid)) && ($old_owner_guid == $user->guid || $user->isAdmin())) {
-		$group->owner_guid = $new_owner_guid;
-		if ($group->container_guid == $old_owner_guid) {
+	if ($camerproject->isMember(get_user($new_owner_guid)) && ($old_owner_guid == $user->guid || $user->isAdmin())) {
+		$camerproject->owner_guid = $new_owner_guid;
+		if ($camerproject->container_guid == $old_owner_guid) {
 			// Even though this action defaults container_guid to the logged in user guid,
 			// the group may have initially been created with a custom script that assigned
 			// a different container entity. We want to make sure we preserve the original
 			// container if it the group is not contained by the original owner.
-			$group->container_guid = $new_owner_guid;
+			$camerproject->container_guid = $new_owner_guid;
 		}
 
 		$metadata = elgg_get_metadata(array(
@@ -143,7 +126,7 @@ if (!$is_new_group && $new_owner_guid && $new_owner_guid != $old_owner_guid) {
 
 if ($is_new_group) {
 	// if new group, we need to save so group acl gets set in event handler
-	if (!$group->save()) {
+	if (!$camerproject->save()) {
 		register_error(elgg_echo("camerproject:save_error"));
 		forward(REFERER);
 	}
@@ -162,17 +145,17 @@ if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
 			// Make this group visible only to group members. We need to use
 			// ACCESS_PRIVATE on the form and convert it to group_acl here
 			// because new groups do not have acl until they have been saved once.
-			$visibility = $group->group_acl;
+			$visibility = $camerproject->group_acl;
 
 			// Force all new group content to be available only to members
-			$group->setContentAccessMode(ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY);
+			$camerproject->setContentAccessMode(ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY);
 		}
 
-		$group->access_id = $visibility;
+		$camerproject->access_id = $visibility;
 	}
 }
 
-if (!$group->save()) {
+if (!$camerproject->save()) {
 	register_error(elgg_echo("camerproject:save_error"));
 	forward(REFERER);
 }
@@ -184,14 +167,14 @@ elgg_clear_sticky_form('groups');
 if ($is_new_group) {
 
 	// @todo this should not be necessary...
-	elgg_set_page_owner_guid($group->guid);
+	elgg_set_page_owner_guid($camerproject->guid);
 
-	$group->join($user);
+	$camerproject->join($user);
 	elgg_create_river_item(array(
 		'view' => 'river/group/create',
 		'action_type' => 'create',
 		'subject_guid' => $user->guid,
-		'object_guid' => $group->guid,
+		'object_guid' => $camerproject->guid,
 	));
 }
 
@@ -199,8 +182,8 @@ $has_uploaded_icon = (!empty($_FILES['icon']['type']) && substr_count($_FILES['i
 
 if ($has_uploaded_icon) {
 	$filehandler = new ElggFile();
-	$filehandler->owner_guid = $group->owner_guid;
-	$filehandler->setFilename("groups/$group->guid.jpg");
+	$filehandler->owner_guid = $camerproject->owner_guid;
+	$filehandler->setFilename("groups/$camerproject->guid.jpg");
 	$filehandler->open("write");
 	$filehandler->write(get_uploaded_file('icon'));
 	$filehandler->close();
@@ -213,4 +196,4 @@ if ($has_uploaded_icon) {
 
 system_message(elgg_echo("camerproject:saved"));
 
-forward($group->getUrl());
+forward($camerproject->getUrl());

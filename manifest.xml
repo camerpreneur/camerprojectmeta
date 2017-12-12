@@ -6,6 +6,7 @@
     <description>This a plugin for all project in Camerpreneur Website</description>
     <version>0.1</version>
     <copyright>(C) CamerPreneur 2017</copyright>
+    <license>MIT Massachusetts Institute of Technology</license>
     <website>http://www.camerpreneur.com/</website>
     <requires>
         <type>elgg_release</type>
