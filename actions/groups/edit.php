@@ -12,7 +12,7 @@ elgg_make_sticky_form('groups');
 
 $title = htmlspecialchars(get_input('name', '', false), ENT_QUOTES, 'UTF-8');
 $description = get_input('description');
-$progress = htmlspecialchars(get_input('progress'));
+$progress = get_input('progress');
 $sectorindustry = get_input('sectorindustry');
 $activity = get_input('activity');
 $markettype = get_input('markettype');
