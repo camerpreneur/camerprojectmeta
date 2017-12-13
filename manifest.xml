@@ -12,4 +12,8 @@
         <type>elgg_release</type>
         <version>2.3</version>
     </requires>
+    <requires>
+	<type>plugin</type>
+	<name>groups</name>
+    </requires>
 </plugin_manifest>

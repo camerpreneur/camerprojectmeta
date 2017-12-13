@@ -15,11 +15,20 @@ function camerproject_init(){
     
    elgg_register_entity_type('object', Needproject::SUBTYPE); 
    
-   $action_base = __DIR__ . '/actions/groups/';
-   elgg_register_action("camerprojectmeta/edit", "$action_base/edit.php");
+    // event handler
+   elgg_register_event_handler('update:after', 'object', '\camerpreneur\camerproject\Access::updateAnnotationAccess');
+   
+    // register actions
+   $actions_bases = __DIR__.'/actions/needproject/';
+    
+   elgg_register_action('needproject/edit', "$actions_bases/edit.php","admin");
+   elgg_register_action('needproject/delete', "$actions_bases/delete.php","admin");
+   
+    // register page handlers
+   elgg_register_page_handler('needproject', '\camerpreneur\camerproject\Router::needproject');
+      
 }   
     
-
 
 function camerproject_fields_setup(){
     

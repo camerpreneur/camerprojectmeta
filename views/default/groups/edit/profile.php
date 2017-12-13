@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Group edit form
+ * project edit form
  *
  * This view contains the group profile field configuration
  *
@@ -12,6 +12,7 @@ $name = elgg_extract("name", $vars);
 $progress = project_get_progress();
 $currency = project_get_currency();
 $industry = project_get_industrysector();
+$entity = elgg_extract('entity', $vars);
 ?>
 
 <div>
@@ -57,11 +58,11 @@ echo elgg_view_field([
 
 
   echo elgg_view_field([
-     '#type' => 'dropdown',
+     '#type' => 'select',
      '#label' => elgg_echo('camerproject:industry'),
-     'name' => 'sectorindustry',
+     'name' => 'sectorindustry',    
      'options_values' => $industry,
-     'value' => elgg_extract('sectorindustry', $vars),
+     'value' => $vars['sectorindustry'],
      'required' => true,
     ]);
 

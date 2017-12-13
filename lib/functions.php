@@ -81,3 +81,41 @@ function project_get_industrysector(){
     
     return $industry;
 }
+
+
+/**
+ * Prepare the form vars for add/edit a Needproject
+ *
+ * @param Needproject $entity (optional) the entity to edit
+ *
+ * @return array
+ */
+function camerproject_prepare_needproject_vars(Needproject $entity = null) {
+	
+	// defaults
+	$result = [
+		'titleneed' => '',
+		'description' => '',
+                'skills' => '',
+                'ability' => '',
+                'statusneed' => '',
+            
+		'access_id' => get_default_access(null, [
+			'entity_type' => 'object',
+			'entity_subtype' => Needproject::SUBTYPE,
+			'container_guid' => elgg_get_site_entity()->guid,
+		]),
+	];
+	
+        $sticky_vars = elgg_get_sticky_values('needproject/edit');
+	
+        if (!empty($sticky_vars)) {
+            
+            foreach ($sticky_vars as $name => $value) {
+                    $result[$name] = $value;
+            }		
+            elgg_clear_sticky_form('needproject/edit');
+	}
+	
+	return $result;
+}

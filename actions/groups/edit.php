@@ -58,7 +58,7 @@ $camerproject->projectwebsite = $projectwebsite;
 $camerproject->projectblog = $projectblog;
 $camerproject->projectpitch = $projectpitch;
 
-$camerproject->subtype = "camerproject";
+$camerproject->subtype = Camerproject::SUBTYPE;
 
 // Set group tool options (only pass along saved entities)
 $tool_entity = !$is_new_group ? $camerproject : null;

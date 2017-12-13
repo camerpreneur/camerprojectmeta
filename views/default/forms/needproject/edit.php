@@ -1,5 +1,4 @@
 <?php
-
 /**
  *  Add/Edit form of Needproject
  * 
@@ -30,8 +29,65 @@ echo elgg_view_field([
 	'required' => true,
 ]);
 
-// put other field here
+// description
 
+echo elgg_view_field([
+    '#type' => 'plaintext',
+    '#label' => elgg_echo("camerproject:needproject:description"),
+    'name' => 'description',
+    'value' => elgg_extract('description', $vars),
+    'required' => true,
+]);
+
+// shills 
+
+echo elgg_view_field([
+    '#type' => "select",
+    '#label' => elgg_echo("camerproject:needproject:skills"),
+    'name' => 'skills',
+    'value' => elgg_extract('skills', $vars),
+]);
+
+// years of experience
+
+echo elgg_view_field([
+    '#type' => 'select',
+    '#label' => elgg_echo("camerproject:needproject:yearexper"),
+    'name' => 'yearexper',
+    'value' => elgg_extract('yearexper', $vars),
+    
+]);
+
+// ability
+echo elgg_view_field([
+    '#type' => 'select',
+    '#label' => elgg_echo("camerproject:needproject:expectedabili"),
+    'name' => 'ability',
+    'value' => elgg_extract('ability', $vars),
+]);
+
+// status of need
+
+echo elgg_view_field([
+    '#type' => 'select',
+    '#label' => elgg_echo("camerproject:needproject:statusneed"),
+    'name' => 'statusneed',
+    'value' => elgg_extract('statusneed', $vars),
+]);
+
+
+
+// access
+echo elgg_view_field([
+	'#type' => 'access',
+	'#label' => elgg_echo('access'),
+	'name' => 'access_id',
+	'value' => (int) elgg_extract('access_id', $vars),
+	'entity_type' => 'object',
+	'entity_subtype' => Needproject::SUBTYPE,
+	'container_guid' => elgg_get_site_entity()->guid,
+	'entity' => $entity,
+]);
 
 // footer
 $footer = elgg_view_field([

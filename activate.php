@@ -2,10 +2,13 @@
 /**
  * This file is called during the activation of the plugin
  */
-
-if (get_subtype_id('object', Needproject::SUBTYPE)) {
-    update_subtype('object', Needproject::SUBTYPE, 'Needproject');
-} else {
-    add_subtype('object', Needproject::SUBTYPE, 'Needproject');
+$subtypes = [
+	'camerproject' => 'Camerproject',
+	'needproject' => 'Needproject',
+];
+foreach ($subtypes as $subtype => $class) {
+    
+    if (!update_subtype('object', $subtype, $class)) {
+        add_subtype('object', $subtype, $class);
+    }
 }
-

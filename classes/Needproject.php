@@ -1,11 +1,10 @@
 <?php
-
-
 /**
  * Description of Needproject
  *
  * @author Kana
  */
+
 class Needproject {
        
     const SUBTYPE = 'needproject';
@@ -38,5 +37,5 @@ public function getURL() {
         $friendly_title = elgg_get_friendly_title($this->getDisplayName());
         return elgg_normalize_url("needproject/view/{$this->guid}/{$friendly_title}");
 }
-
 }
+
