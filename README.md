@@ -1,2 +1,2 @@
 # camerprojectmeta
-Use meta data here 
+Extends groups plugins features 
