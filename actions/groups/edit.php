@@ -30,17 +30,18 @@ $user = elgg_get_logged_in_user_entity();
 $group_guid = (int)get_input('group_guid');
 $is_new_group = $group_guid == 0;
 
-if ($is_new_group
-		&& (elgg_get_plugin_setting('limited_groups', 'groups') == 'yes')
-		&& !$user->isAdmin()) {
-	register_error(elgg_echo("camerproject:cantcreate"));
-	forward(REFERER);
-}
-
-$camerproject = $group_guid ? get_entity($group_guid) : new ElggGroup();
-if (elgg_instanceof($camerproject, "group") && !$camerproject->canEdit()) {
-	register_error(elgg_echo("camerproject:cantedit"));
-	forward(REFERER);
+if (!empty($guid)) {
+	$camerproject = get_entity($group_guid);
+	if (!($camerproject instanceof Camerproject) || !$camerproject->canEdit()) {
+		return elgg_error_response(elgg_echo('actionunauthorized'));
+	}
+} else {
+	$is_new_group = 1;
+	$camerproject = new Camerproject();
+	
+	if (!$camerproject->save()) {
+		return elgg_error_response(elgg_echo('save:fail'));
+	}
 }
 
 $camerproject->name = $title;
@@ -190,10 +191,10 @@ if ($has_uploaded_icon) {
 
 	if ($filehandler->exists()) {
 		// Non existent file throws exception
-		$group->saveIconFromElggFile($filehandler);
+		$camerproject->saveIconFromElggFile($filehandler);
 	}
 }
 
 system_message(elgg_echo("camerproject:saved"));
 
-forward($camerproject->getUrl());
+forward($camerproject->getURL());

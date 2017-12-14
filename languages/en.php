@@ -197,10 +197,16 @@ return [
     'camerproject:ecml:projectprofile' => 'Project profiles',
     
     /**
-     * Sector industry 
+     * Need of project
      */
     
-    'camerproject:sectorindustry:edit' => 'Edit',
+    'camerproject:needproject:edit' => 'Edit',
+    'camerproject:needproject:title' => 'Need Name',
+    'camerproject:needproject:description' => 'Need description',
+    'camerproject:needproject:skills' => 'Skills',
+    'camerproject:needproject:yearexper' => 'Year of experience',
+    'camerproject:needproject:expectedabili' => 'Expected abilities',
+    'camerproject:needproject:statusneed' => 'Status need',
     
     
     /**

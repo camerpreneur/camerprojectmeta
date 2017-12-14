@@ -12,7 +12,6 @@ $name = elgg_extract("name", $vars);
 $progress = project_get_progress();
 $currency = project_get_currency();
 $industry = project_get_industrysector();
-$entity = elgg_extract('entity', $vars);
 ?>
 
 <div>
@@ -62,7 +61,7 @@ echo elgg_view_field([
      '#label' => elgg_echo('camerproject:industry'),
      'name' => 'sectorindustry',    
      'options_values' => $industry,
-     'value' => $vars['sectorindustry'],
+     'value' => elgg_extract('sectionindustry', $vars), 
      'required' => true,
     ]);
 

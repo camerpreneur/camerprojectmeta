@@ -65,7 +65,7 @@ public static function accessArray($hook, $type, $return_value, $params) {
     }
 
     $entity_subtype = elgg_extract('entity_subtype', $input_params);
-    if (!in_array($entity_subtype, [\Sectorindustry::SUBTYPE, \Camerproject::SUBTYPE , \Devise::SUBTYPE])) {
+    if (!in_array($entity_subtype, [\Needproject::SUBTYPE])) {
             return;
     }
 
