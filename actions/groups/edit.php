@@ -195,6 +195,13 @@ if ($has_uploaded_icon) {
 	}
 }
 
-system_message(elgg_echo("camerproject:saved"));
+//$need = new Needproject();
+
+//system_message(elgg_echo("camerproject:saved"));
+
+if($is_new_group){
+    forward($camerproject->forUrl());
+}
 
 forward($camerproject->getURL());
+

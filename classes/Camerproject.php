@@ -40,8 +40,18 @@ public function getURL() {
     
         $friendly_title = elgg_get_friendly_title($this->getDisplayName());
         
-        return elgg_normalize_url("needproject/add");
+        return elgg_normalize_url("camerproject/profile/{$this->guid}/{$friendly_title}");
+    
+    
 } 
+
+/*
+ *  forward url to add new need of project
+ */
+public function forUrl(){
+    return elgg_normalize_url("needproject/add");
+}
+
 /**
  * Set the needproject affected by this camerproject
  *

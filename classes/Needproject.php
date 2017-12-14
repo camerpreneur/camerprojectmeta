@@ -5,7 +5,7 @@
  * @author Kana
  */
 
-class Needproject {
+class Needproject extends ElggObject {
        
     const SUBTYPE = 'needproject';
     
@@ -35,6 +35,7 @@ public function canComment($user_guid = 0, $default = null) {
  */
 public function getURL() {
         $friendly_title = elgg_get_friendly_title($this->getDisplayName());
+        
         return elgg_normalize_url("needproject/view/{$this->guid}/{$friendly_title}");
 }
 }
