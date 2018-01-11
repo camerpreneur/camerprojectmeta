@@ -8,7 +8,7 @@ return [
     /*
      * Menu  items and Titles
      */
-    'camerproject' => 'Project',
+    'camerprojects' => 'Projects',
     'camerproject:owned' => "Project I own",
     'camerproject:yours' => "My project",
     'camerproject:title' => 'Project Title',
@@ -207,7 +207,7 @@ return [
     'camerproject:needproject:yearexper' => 'Year of experience',
     'camerproject:needproject:expectedabili' => 'Expected abilities',
     'camerproject:needproject:statusneed' => 'Status need',
-    'camerproject:needproject:add' => ' Add need for current project',
+    'camerproject:needproject:add' => ' Create need for current project',
     
     /**
      *  project status 
@@ -245,5 +245,30 @@ return [
     "camerproject:projectindustrysector:name:biolo" => "Biology, Pharmacy",
     "camerproject:projectindustrysector:name:afric" => "African Culture",
     "camerproject:projectindustrysector:name:it" => "IT, Telecom, Technology and Electronics",
-
+    
+    /**
+     *  Entity add at needproject skills 
+     */
+    
+    "camerproject:needprojectskill:archi" => "Architecture",
+    "camerproject:needprojectskill:art" => "Art",
+    "camerproject:needprojectskill:busintil" => "Business Intelligence",
+    "camerproject:needprojectskill:com" => "Communication",
+    
+    "camerproject:needprojectyear:zeroandfiveyears" => "0-5 years",
+    "camerproject:needprojectyear:fiveandtenyears" => "5-10 years",
+    "camerproject:needprojectyear:tenandfifteenyears" => "10-15 years",
+    "camerproject:needprojectyear:abovefifteenyears" => " Above 15 years",
+    
+    "camerproject:needprojectability:actanddyn" => "Active and Dynamic",
+    "camerproject:needprojectability:analandcrit" => "Analysis and crital spirit",
+    "camerproject:needprojectability:atease" => "At ease with ideas",
+    
+    "camerproject:needprojectstatus:paying" => "Paying",
+    "camerproject:needprojectstatus:free" => "Free",
+    
+    /**
+     * redifine name 
+     */
+    'groups' => "Projects",
  ];

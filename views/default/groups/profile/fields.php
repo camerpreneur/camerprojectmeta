@@ -4,7 +4,7 @@
  */
 
 $camerproject = $vars['entity'];
-
+$owner = $camerproject->getOwnerEntity();
 $profile_fields = elgg_get_config('group');
 
 if (is_array($profile_fields) && count($profile_fields) > 0) {
@@ -34,4 +34,16 @@ if (is_array($profile_fields) && count($profile_fields) > 0) {
 
 		$even_odd = ($even_odd == 'even') ? 'odd' : 'even';
 	}
+        
+    if($owner->guid == elgg_get_logged_in_user_guid()){          
+        echo "<div class=\"elgg-module clearfix elgg-module-group box elgg-module-info \" style =\" text-align: center\">";
+        echo elgg_view('output/url', array(
+            'text' => elgg_echo('camerproject:needproject:add'),
+            'href' => elgg_get_site_url() . "needproject/add",
+            ));
+        
+        echo "</div>";
+    }
+ 
+  
 }

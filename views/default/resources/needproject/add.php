@@ -6,7 +6,7 @@
 gatekeeper();
 
 // breadcrumb
-elgg_push_breadcrumb(elgg_echo('camerproject:breadcrumb:needproject:all'), 'needproject/all');
+//elgg_push_breadcrumb(elgg_echo('camerproject:breadcrumb:needproject:all'), 'needproject/all');
 elgg_push_breadcrumb(elgg_echo('add'));
 
 // build page elements

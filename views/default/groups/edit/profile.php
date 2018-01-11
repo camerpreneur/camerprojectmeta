@@ -7,36 +7,27 @@
  *
  * @package ElggGroups
  */
-
 $name = elgg_extract("name", $vars);
 $progress = project_get_progress();
 $currency = project_get_currency();
 $industry = project_get_industrysector();
-?>
-
-<div>
-    <?php   
-    echo elgg_view_field([
+   
+echo elgg_view_field([
         "#type" => "text",
         "#label" => elgg_echo("camerproject:title"),
         "name" => "name",
         "value" => $name,
         "required" => true,
     ]);     
-    ?>
-</div>
-
-<div>
-    <?php 
-        echo elgg_view_field([
+    
+  
+echo elgg_view_field([
             "#type" => "file",
             "#label" => elgg_echo("camerproject:logoproject"),
             "name" => "icon",               
-        ])
-    ?>
-</div>
+        ]);
+    
 
-<?php
 echo elgg_view_field([
      '#type' => 'plaintext',
      '#label' => elgg_echo('camerproject:description'),

@@ -14,7 +14,7 @@ if (!elgg_in_context('owner_block') && !elgg_in_context('widgets')) {
 	// only show entity menu outside of widgets and owner block
 	$metadata = elgg_view_menu('entity', array(
 		'entity' => $camerproject,
-		'handler' => 'camerprojectmeta',
+		'handler' => 'camerproject',
 		'sort_by' => 'priority',
 		'class' => 'elgg-menu-hz',
 	));

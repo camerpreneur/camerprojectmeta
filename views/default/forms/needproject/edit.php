@@ -10,6 +10,8 @@ use Needproject;
 /* @var $entity Needproject */
 
 $entity = elgg_extract('entity', $vars);
+$skills = needproject_get_skills();
+$ability = needproject_get_ability();
 
 if( $entity instanceof Needproject){    
     // edit    
@@ -45,7 +47,9 @@ echo elgg_view_field([
     '#type' => "select",
     '#label' => elgg_echo("camerproject:needproject:skills"),
     'name' => 'skills',
+    'options_values' => $skills,
     'value' => elgg_extract('skills', $vars),
+    'required' => true,
 ]);
 
 // years of experience
@@ -54,8 +58,14 @@ echo elgg_view_field([
     '#type' => 'select',
     '#label' => elgg_echo("camerproject:needproject:yearexper"),
     'name' => 'yearexper',
+    'options' => [        
+        'zeroandfive' => elgg_echo("camerproject:needprojectyear:zeroandfiveyears"),
+        'fiveandten' => elgg_echo("camerproject:needprojectyear:fiveandtenyears"),
+        'tenandfiften' => elgg_echo("camerproject:needprojectyear:tenandfifteenyears"),
+        'abovefifteen' => elgg_echo("camerproject:needprojectyear:abovefifteenyears"),
+    ],
     'value' => elgg_extract('yearexper', $vars),
-    
+    'required' => true,
 ]);
 
 // ability
@@ -63,7 +73,9 @@ echo elgg_view_field([
     '#type' => 'select',
     '#label' => elgg_echo("camerproject:needproject:expectedabili"),
     'name' => 'ability',
+    'options_values' => $ability,
     'value' => elgg_extract('ability', $vars),
+    'required' => true,
 ]);
 
 // status of need
@@ -72,10 +84,12 @@ echo elgg_view_field([
     '#type' => 'select',
     '#label' => elgg_echo("camerproject:needproject:statusneed"),
     'name' => 'statusneed',
+    'options' => [
+        'needfree' => elgg_echo("camerproject:needprojectstatus:free"),
+        'needpaying' => elgg_echo("camerproject:needprojectstatus:paying"),
+    ],
     'value' => elgg_extract('statusneed', $vars),
 ]);
-
-
 
 // access
 echo elgg_view_field([

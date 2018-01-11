@@ -38,5 +38,6 @@ public function getURL() {
         
         return elgg_normalize_url("needproject/view/{$this->guid}/{$friendly_title}");
 }
+
 }
 

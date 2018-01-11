@@ -40,7 +40,7 @@ public function getURL() {
     
         $friendly_title = elgg_get_friendly_title($this->getDisplayName());
         
-        return elgg_normalize_url("camerproject/profile/{$this->guid}/{$friendly_title}");
+        return elgg_normalize_url("groups/profile/{$this->guid}/{$friendly_title}");
     
     
 } 

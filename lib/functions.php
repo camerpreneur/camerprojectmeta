@@ -82,6 +82,49 @@ function project_get_industrysector(){
     return $industry;
 }
 
+/**
+ *  function define skills of need 
+ */
+
+function needproject_get_skills(){
+    
+    $codes = [
+        'archi',
+        'art',
+        'busintil',
+        'com',
+    ];
+    
+    $skills = [];
+    
+    foreach ( $codes as $code ){
+        $skills[$code] = elgg_echo("camerproject:needprojectskill:$code");
+    }
+    
+    uksort($skills, 'strcasecmp');
+    
+    return $skills;
+}
+
+function needproject_get_ability(){
+    
+    $codes = [
+        'actanddyn',
+        'analandcrit',
+        'atease',
+    ];
+            
+    $ability = [];
+    
+    foreach ($codes as $code ){
+      
+        $ability[$code] = elgg_echo("camerproject:needprojectability:$code");
+    }
+    
+    uksort($ability, 'strcasecmp');
+    
+    return $ability;
+}
 
 /**
  * Prepare the form vars for add/edit a Needproject
